@@ -22,17 +22,37 @@ kotlin {
                 implementation("dev.forkhandles:result4k:LOCAL")
             }
         }
+        val commonTest by getting {
+            dependencies {
+                implementation("io.kotest:kotest-assertions-core:4.4.3")
+                implementation("io.kotest:kotest-framework-api:4.4.3")
+            }
+        }
+        val jvmTest by getting {
+            dependencies {
+                implementation("io.kotest:kotest-runner-junit5:4.1.1")
+            }
+        }
+
     }
     publishing {
         publications {
             withType<MavenPublication> {
-                pom.withXml {
-                    asNode().appendNode("name", artifactId)
-                    asNode().appendNode("description", description)
-                    asNode().appendNode("developers")
-                        .appendNode("developer").appendNode("name", "Jordan Bergin").parent().appendNode("email", "jordan.j.bergin@protonmail.com")
+                configurePom {
+                    name(artifactId)
+                    description(description ?: "")
+                    developers {
+                        developer {
+                            name("Jordan Bergin")
+                            email("jordan.j.bergin@protonmail.com")
+                        }
+                    }
                 }
             }
         }
     }
+}
+
+tasks.withType<Test> {
+    useJUnitPlatform()
 }
