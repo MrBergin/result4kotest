@@ -1,5 +1,5 @@
 plugins {
-    kotlin("multiplatform") version "1.4.31"
+    kotlin("multiplatform")
     id("maven-publish")
 }
 
@@ -30,10 +30,9 @@ kotlin {
         }
         val jvmTest by getting {
             dependencies {
-                implementation("io.kotest:kotest-runner-junit5:4.1.1")
+                implementation("io.kotest:kotest-runner-junit5:4.4.3")
             }
         }
-
     }
     publishing {
         publications {
